@@ -1,10 +1,12 @@
 const express = require('express');
 const App = express();
 const PORT = 3550
+const cors = require('cors');
 require("dotenv").config();
 require("./config/db")
 require("./config/cloudinary");
 const productRouter = require('./router/product.router');
+App.use(cors());
 
 
 App.get('/', (req, res) => {
