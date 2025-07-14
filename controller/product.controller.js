@@ -43,8 +43,15 @@ const getAllProduct = async (req, res) => {
   }
 };
 const getOneProduct = async (req, res) => {
-     try {
-    const getProductOne = await productModel.find(req.params.id);
+  try {
+    const getProductOne = await productModel.findById(req.params.id);
+
+    if (!getProductOne) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
     res.status(200).json({
       message: "Product gotten successfully",
       data: getProductOne,
@@ -52,10 +59,10 @@ const getOneProduct = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: "Failed to get Product",
-      data: error,
+      error: error.message, // Use .message for better readability
     });
   }
+};
 
-}
 
 module.exports = { newProduct, getAllProduct, getOneProduct };
